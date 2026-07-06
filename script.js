@@ -10,7 +10,7 @@ logoStyle.textContent = `
     height: 52px !important;
     border: 0 !important;
     border-radius: 0 !important;
-    background: transparent url('assets/sfu-logo.svg') center / contain no-repeat !important;
+    background: transparent url('assets/sfu-logo.svg?logo=3') center / contain no-repeat !important;
     color: transparent !important;
     font-size: 0 !important;
     flex: 0 0 168px !important;
