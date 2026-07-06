@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="211" height="58" viewBox="0 0 211 58" role="img" aria-label="SFU logo">
+  <rect width="211" height="58" fill="none"/>
+  <g fill="#8b2d35">
+    <rect x="6" y="25" width="34" height="8" rx="1"/>
+    <rect x="19" y="12" width="8" height="34" rx="1"/>
+    <rect x="10" y="16" width="9" height="9" transform="rotate(45 14.5 20.5)"/>
+    <rect x="27" y="16" width="9" height="9" transform="rotate(45 31.5 20.5)"/>
+    <rect x="10" y="33" width="9" height="9" transform="rotate(45 14.5 37.5)"/>
+    <rect x="27" y="33" width="9" height="9" transform="rotate(45 31.5 37.5)"/>
+    <path d="M48 16h31v9H59v8h18v9H59v16H48z"/>
+    <path d="M90 44c4 3 10 5 16 5 7 0 10-2 10-6 0-3-2-5-8-6l-8-2c-11-2-16-8-16-17 0-11 9-18 23-18 8 0 15 2 21 6l-5 9c-5-3-10-5-16-5-6 0-10 3-10 7s2 5 9 7l8 2c10 2 15 8 15 17 0 11-9 18-24 18-9 0-17-2-22-6z" transform="translate(0 0) scale(.86) translate(0 2)"/>
+    <path d="M138 7h31v10h-19v9h17v10h-17v22h-12z"/>
+    <path d="M176 7h12v31c0 7 3 10 9 10s9-3 9-10V7h12v31c0 14-8 21-21 21s-21-7-21-21z" transform="translate(-7 0)"/>
+  </g>
+</svg>
