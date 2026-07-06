@@ -1,3 +1,8 @@
+const animationLink = document.createElement('link');
+animationLink.rel = 'stylesheet';
+animationLink.href = 'assets/animations.css?motion=1';
+document.head.appendChild(animationLink);
+
 const toggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.nav');
 const links = document.querySelectorAll('.nav a');
@@ -28,6 +33,10 @@ logoStyle.textContent = `
 `;
 document.head.appendChild(logoStyle);
 
+const transitionCover = document.createElement('div');
+transitionCover.className = 'page-transition-cover';
+document.body.appendChild(transitionCover);
+
 const currentPage = window.location.pathname.split('/').pop() || 'index.html';
 links.forEach(link => {
   const href = link.getAttribute('href') || '';
@@ -45,6 +54,61 @@ links.forEach(link => {
     nav.classList.remove('open');
     toggle?.setAttribute('aria-expanded', 'false');
   });
+});
+
+const revealTargets = document.querySelectorAll([
+  '.programme-card',
+  '.structure-grid article',
+  '.career-grid article',
+  '.subpage-grid article',
+  '.content-card',
+  '.directory-block',
+  '.cta-banner',
+  '.partner-strip span',
+  '.quick-links a',
+  '.faq details',
+  '.pathway-line article'
+].join(','));
+
+if ('IntersectionObserver' in window) {
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('reveal-in');
+      revealObserver.unobserve(entry.target);
+    });
+  }, { threshold: 0.14, rootMargin: '0px 0px -8% 0px' });
+
+  revealTargets.forEach(el => {
+    el.classList.add('reveal-ready');
+    revealObserver.observe(el);
+  });
+} else {
+  revealTargets.forEach(el => el.classList.add('reveal-in'));
+}
+
+document.querySelectorAll('a[href]').forEach(anchor => {
+  anchor.addEventListener('click', event => {
+    const href = anchor.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+    const url = new URL(href, window.location.href);
+    const sameOrigin = url.origin === window.location.origin;
+    const samePageHash = url.pathname === window.location.pathname && url.hash;
+    if (!sameOrigin || samePageHash || anchor.target === '_blank') return;
+
+    event.preventDefault();
+    nav?.classList.remove('open');
+    transitionCover.classList.add('is-active');
+    document.body.classList.add('page-leave');
+    window.setTimeout(() => {
+      window.location.href = url.href;
+    }, 260);
+  });
+});
+
+window.addEventListener('pageshow', () => {
+  transitionCover.classList.remove('is-active');
+  document.body.classList.remove('page-leave');
 });
 
 window.addEventListener('scroll', () => {
