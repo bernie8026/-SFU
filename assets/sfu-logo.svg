@@ -1,4 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="211" height="58" viewBox="0 0 992 277" role="img" aria-label="SFU logo">
+<svg xmlns="http://www.w3.org/2000/svg" width="211" height="58" viewBox="0 0 720 190" role="img" aria-label="SFU logo">
   <title>SFU logo</title>
-  <path fill="#8b2d35" fill-rule="evenodd" d="M 67 52 L 64 55 L 63 83 L 41 63 L 12 93 L 32 115 L 4 116 L 0 119 L 0 151 L 4 154 L 32 155 L 12 177 L 41 207 L 63 186 L 65 217 L 99 218 L 101 216 L 102 186 L 124 207 L 154 177 L 133 155 L 162 154 L 164 152 L 164 118 L 162 116 L 133 115 L 153 94 L 153 92 L 124 63 L 102 84 L 101 54 L 99 52 Z M 113 154 L 114 156 L 104 167 L 102 167 L 101 156 L 103 154 Z M 51 155 L 63 154 L 64 166 L 62 167 Z M 63 103 L 64 115 L 52 116 L 51 114 Z M 101 103 L 103 102 L 114 113 L 114 115 L 103 116 L 101 114 Z M 640 28 L 640 276 L 697 276 L 698 169 L 779 168 L 779 121 L 698 121 L 698 75 L 789 75 L 791 77 L 791 196 L 794 214 L 800 231 L 807 244 L 821 260 L 834 269 L 850 276 L 933 276 L 947 270 L 958 263 L 969 253 L 978 241 L 986 224 L 991 204 L 991 27 L 936 27 L 935 194 L 930 210 L 926 216 L 918 223 L 902 229 L 881 229 L 865 224 L 856 218 L 849 207 L 847 196 L 847 28 Z M 312 0 L 285 4 L 260 12 L 240 23 L 225 35 L 213 50 L 204 68 L 201 81 L 201 100 L 205 116 L 212 129 L 224 142 L 241 152 L 260 160 L 281 166 L 326 174 L 344 181 L 350 186 L 353 193 L 353 202 L 350 209 L 343 216 L 331 222 L 317 225 L 294 225 L 269 219 L 245 209 L 221 194 L 193 239 L 203 247 L 226 259 L 251 268 L 277 273 L 300 276 L 331 275 L 356 270 L 378 261 L 395 249 L 406 237 L 416 219 L 420 202 L 420 181 L 416 164 L 408 150 L 397 138 L 379 128 L 360 121 L 339 116 L 296 108 L 280 104 L 269 98 L 265 93 L 263 85 L 266 75 L 273 68 L 287 62 L 303 59 L 324 60 L 346 64 L 369 73 L 391 86 L 419 40 L 402 30 L 376 17 L 349 7 Z M 205 70 L 164 70 L 164 71 L 199 112 L 200 80 Z"/>
+  <g fill="#8b2d35">
+    <rect x="8" y="80" width="114" height="30" rx="5"/>
+    <rect x="50" y="38" width="30" height="114" rx="5"/>
+    <rect x="21" y="51" width="34" height="34" transform="rotate(45 38 68)"/>
+    <rect x="75" y="51" width="34" height="34" transform="rotate(45 92 68)"/>
+    <rect x="21" y="105" width="34" height="34" transform="rotate(45 38 122)"/>
+    <rect x="75" y="105" width="34" height="34" transform="rotate(45 92 122)"/>
+    <text x="155" y="148" font-family="Arial Black, Helvetica, Arial, sans-serif" font-size="156" font-weight="900" letter-spacing="-12">SFU</text>
+  </g>
 </svg>
