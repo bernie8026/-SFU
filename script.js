@@ -1,12 +1,12 @@
 const animationLink = document.createElement('link');
 animationLink.rel = 'stylesheet';
-animationLink.href = 'assets/animations.css?motion=2';
+animationLink.href = 'assets/animations.css?motion=3';
 document.head.appendChild(animationLink);
 
 const toggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.nav');
-const links = document.querySelectorAll('.nav a');
 const topButton = document.querySelector('.back-to-top');
+
 const transitionCover = document.createElement('div');
 transitionCover.className = 'page-transition-cover';
 document.body.appendChild(transitionCover);
@@ -18,7 +18,7 @@ globalStyle.textContent = `
     height: 52px !important;
     border: 0 !important;
     border-radius: 0 !important;
-    background: transparent url('assets/sfu-logo.svg?logo=5') center / contain no-repeat !important;
+    background: transparent url('assets/sfu-logo.svg?logo=6') center / contain no-repeat !important;
     color: transparent !important;
     font-size: 0 !important;
     flex: 0 0 168px !important;
@@ -27,7 +27,7 @@ globalStyle.textContent = `
   .brand > span:last-child strong { color: #7a1f2d !important; }
   .language-switcher {
     display: inline-flex;
-    gap: .25rem;
+    gap: .3rem;
     align-items: center;
   }
   .utility-bar .language-switcher {
@@ -40,11 +40,12 @@ globalStyle.textContent = `
     background: transparent;
     color: #fff;
     border-radius: 999px;
-    padding: .22rem .56rem;
+    padding: .24rem .68rem;
     font-size: .78rem;
     font-weight: 900;
     cursor: pointer;
     transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+    white-space: nowrap;
   }
   .language-switcher button.active,
   .language-switcher button:hover {
@@ -72,7 +73,8 @@ globalStyle.textContent = `
   }
   @media (max-width: 760px) {
     .main-header {
-      gap: .6rem !important;
+      gap: .55rem !important;
+      flex-wrap: wrap !important;
     }
     .crest {
       width: 132px !important;
@@ -82,15 +84,17 @@ globalStyle.textContent = `
     .brand > span:last-child { display: none !important; }
     .mobile-language-switcher {
       display: inline-flex;
-      margin-left: auto;
-      margin-right: .25rem;
+      width: 100%;
+      order: 3;
+      justify-content: flex-end;
+      margin-top: .2rem;
     }
     .main-header .language-switcher button {
       border-color: #e4d7cd;
       color: #7a1f2d;
       background: #fffaf3;
-      padding: .28rem .5rem;
-      font-size: .76rem;
+      padding: .34rem .62rem;
+      font-size: .78rem;
     }
     .main-header .language-switcher button.active,
     .main-header .language-switcher button:hover {
@@ -104,9 +108,12 @@ globalStyle.textContent = `
 document.head.appendChild(globalStyle);
 
 function removeInternalNotes() {
-  document.querySelectorAll('.content-card.warning').forEach(card => {
-    const heading = card.querySelector('h2')?.textContent.trim();
-    if (heading === '建議網站用字') card.remove();
+  document.querySelectorAll('.content-card.warning').forEach(card => card.remove());
+  document.querySelectorAll('.content-card').forEach(card => {
+    const text = card.textContent || '';
+    if (text.includes('網站文字可以寫') || text.includes('保證工作 offer')) {
+      card.innerHTML = '<h2>Career Readiness</h2><p>學生可透過職涯規劃、CV 及面試準備、career talks、company visits、實習資訊及畢業就業支援，逐步建立投身 AI、ICT、software development、data 及 cloud technology 行業所需的專業準備。</p>';
+    }
   });
 }
 
@@ -116,21 +123,11 @@ function cleanFooter() {
   });
 }
 
-removeInternalNotes();
-cleanFooter();
-
-const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-links.forEach(link => {
-  const href = link.getAttribute('href') || '';
-  const linkPage = href.split('#')[0] || 'index.html';
-  if (linkPage === currentPage) link.classList.add('active');
-});
-
 function switcherMarkup(extraClass = '') {
   return `<div class="language-switcher ${extraClass}" aria-label="Language selector">
-    <button type="button" data-lang="zh-hant">繁</button>
-    <button type="button" data-lang="en">EN</button>
-    <button type="button" data-lang="zh-hans">简</button>
+    <button type="button" data-lang="zh-hant">繁體中文</button>
+    <button type="button" data-lang="en">English</button>
+    <button type="button" data-lang="zh-hans">简体中文</button>
   </div>`;
 }
 
@@ -156,8 +153,17 @@ function addMobileUtilityLinks() {
   </div>`);
 }
 
+removeInternalNotes();
+cleanFooter();
 addLanguageSwitchers();
 addMobileUtilityLinks();
+
+const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+document.querySelectorAll('.nav a').forEach(link => {
+  const href = link.getAttribute('href') || '';
+  const linkPage = href.split('#')[0] || 'index.html';
+  if (linkPage === currentPage) link.classList.add('active');
+});
 
 const textNodes = [];
 const originalText = new WeakMap();
@@ -167,6 +173,7 @@ function collectTextNodes(root = document.body) {
       const parent = node.parentElement;
       if (!parent) return NodeFilter.FILTER_REJECT;
       if (['SCRIPT', 'STYLE', 'NOSCRIPT', 'TEXTAREA'].includes(parent.tagName)) return NodeFilter.FILTER_REJECT;
+      if (parent.closest('.language-switcher')) return NodeFilter.FILTER_REJECT;
       if (!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
       return NodeFilter.FILTER_ACCEPT;
     }
@@ -181,11 +188,12 @@ collectTextNodes();
 
 const enMap = new Map(Object.entries({
   '資料以 SFUHK 及 JUPAS 最新官方公布為準。': 'Information is subject to the latest official announcements from SFUHK and JUPAS.',
-  '開關選單': 'Menu',
+  'AI & ICT 課程裝備學生掌握人工智能、軟件開發、數據應用、雲端技術及資訊系統等專業能力，支援學生規劃升學及就業方向。': 'AI & ICT programmes equip students with professional capabilities in artificial intelligence, software development, data applications, cloud technology and information systems, supporting both further study and career planning.',
+  '學生可透過職涯規劃、CV 及面試準備、career talks、company visits、實習資訊及畢業就業支援，逐步建立投身 AI、ICT、software development、data 及 cloud technology 行業所需的專業準備。': 'Students can build career readiness through career planning, CV and interview preparation, career talks, company visits, internship information and graduate employment support, preparing for careers in AI, ICT, software development, data and cloud technology.',
   '最新課程資訊摘要': 'Latest Programme Information',
-  'HDAI-ICT / BScAI 課程資料整理': 'HDAI-ICT / BScAI Programme Summary',
+  'HDAI-ICT / BScAI 課程資料整理': 'HDAI-ICT / BScAI Programme Information',
+  '整合 HDAI-ICT 人工智能及資訊通訊科技高級文憑 與 BScAI 人工智能（榮譽）理學士 的課程、升學、資助及業界資訊，整體版面參考 SFUHK 官方首頁分區。': 'This site presents HDAI-ICT and BScAI programme information, including programme structure, articulation, financial support, scholarships and industry connections.',
   '已整理入學、課程、升學、就業、資助、獎學金、公司合作及 internship 支援；詳細內容已分成多個正式分頁。': 'Admissions, programme structure, articulation, career pathways, funding, scholarships, industry collaboration and internship support are organised into dedicated pages.',
-  '整合 HDAI-ICT 人工智能及資訊通訊科技高級文憑 與 BScAI 人工智能（榮譽）理學士 的課程、升學、資助及業界資訊，整體版面參考 SFUHK 官方首頁分區。': 'This site summarises HDAI-ICT and BScAI programme information, including programme structure, articulation, funding, scholarships and industry support, using an SFUHK official-site style layout.',
   '查看 HDAI-ICT / BScAI': 'View HDAI-ICT / BScAI',
   '入學路線及申請入口': 'Admissions route and application entry',
   '了解 HD → Degree → Postgrad': 'Understand HD → Degree → Postgraduate pathways',
@@ -210,11 +218,6 @@ const enMap = new Map(Object.entries({
   '升學方向': 'Articulation Direction',
   '讀完仲可唔可以再上？': 'Can graduates continue to further study?',
   '畢業出路': 'Career Pathways',
-  '首頁 / 入學': 'Home / Admissions',
-  'Home / Admissions': 'Home / Admissions',
-  'Home / Industry Collaboration': 'Home / Industry Collaboration',
-  'Home / Programme Offerings': 'Home / Programme Offerings',
-  'Home / Search / FAQ': 'Home / Search / FAQ',
   '學生支援': 'Student Support',
   '申請入學': 'Apply Now',
   '搜尋': 'Search'
@@ -233,15 +236,13 @@ const phraseHansMap = new Map(Object.entries({
 }));
 
 const charHansMap = {
-  '學':'学','體':'体','資訊':'资讯','訊':'讯','課':'课','與':'与','榮':'荣','譽':'誉','資':'资','獎':'奖','業':'业','聯':'联','連':'连','繫':'系','參':'参','觀':'观','職':'职','劃':'划','準':'准','確':'确','畢':'毕','頁':'页','網':'网','簡':'简','選':'选','擇':'择','級':'级','憑':'凭','語':'语','為':'为','會':'会','實':'实','習':'习','應':'应','該':'该','現':'现','內':'内','單':'单','後':'后','將':'将','開':'开','關':'关','導':'导','覽':'览','這':'这','個':'个','較':'较','別':'别','條':'条','徑':'径','係':'是','啲':'些','咩':'什么','唔':'不','嘅':'的','喺':'在','佢':'它','哋':'们','睇':'看','寫':'写','過':'过','話':'说','對':'对','讓':'让','風':'风','並':'并','設':'设','時':'时','間':'间','維':'维','護':'护','務':'务','碼':'码','據':'据','數':'数','優':'优','點':'点','適':'适','門':'门','報':'报','讀':'读','銜':'衔','請':'请','當':'当','長':'长','總':'总','結':'结','標':'标','題':'题','動':'动','廣':'广','東':'东','項':'项','嗎':'吗','區':'区','顯':'显','示':'示','師':'师','發':'发','展':'展'
+  '學':'学','體':'体','資訊':'资讯','訊':'讯','課':'课','與':'与','榮':'荣','譽':'誉','資':'资','獎':'奖','業':'业','聯':'联','連':'连','繫':'系','參':'参','觀':'观','職':'职','劃':'划','準':'准','確':'确','畢':'毕','頁':'页','網':'网','簡':'简','選':'选','擇':'择','級':'级','憑':'凭','語':'语','為':'为','會':'会','實':'实','習':'习','應':'应','該':'该','現':'现','內':'内','單':'单','後':'后','將':'将','開':'开','關':'关','導':'导','覽':'览','這':'这','個':'个','較':'较','別':'别','條':'条','徑':'径','係':'是','啲':'些','咩':'什么','唔':'不','嘅':'的','喺':'在','佢':'它','哋':'们','睇':'看','寫':'写','過':'过','話':'说','對':'对','讓':'让','風':'风','並':'并','設':'设','時':'时','間':'间','維':'维','護':'护','務':'务','碼':'码','據':'据','數':'数','優':'优','點':'点','適':'适','門':'门','報':'报','讀':'读','銜':'衔','請':'请','當':'当','長':'长','總':'总','結':'结','標':'标','題':'题','動':'动','廣':'广','東':'东','項':'项','嗎':'吗','區':'区','顯':'显','軟':'软','雲':'云','專':'专','規':'规','畢':'毕'
 };
 
 function toSimplified(text) {
   const trimmed = text.trim();
   let output = phraseHansMap.has(trimmed) ? text.replace(trimmed, phraseHansMap.get(trimmed)) : text;
-  Object.entries(charHansMap).forEach(([from, to]) => {
-    output = output.split(from).join(to);
-  });
+  Object.entries(charHansMap).forEach(([from, to]) => { output = output.split(from).join(to); });
   return output;
 }
 
@@ -268,7 +269,6 @@ function applyLanguage(lang) {
 document.querySelectorAll('.language-switcher button').forEach(button => {
   button.addEventListener('click', () => applyLanguage(button.dataset.lang));
 });
-
 applyLanguage(localStorage.getItem('sfu-site-lang') || 'zh-hant');
 
 toggle?.addEventListener('click', () => {
